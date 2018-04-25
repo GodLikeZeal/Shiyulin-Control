@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+
+	<diskStore path="../temp/Shiyulin_Control/ehcache" />
+
+	<!-- 默认缓存配置. -->
+	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	
+	<!-- 系统缓存 -->
+	<cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	
+	<!-- 用户缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	
+	<!-- 系统活动会话缓存 -->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="10000" overflowToDisk="true"
+           eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
+           diskPersistent="true" diskExpiryThreadIntervalSeconds="600" />
+    
+    <!-- 简单页面缓存
+    <cache name="SimplePageCachingFilter" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true"
+    	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/> -->
+
+	<!-- 登录记录缓存 锁定10分钟 -->
+	<cache name="passwordRetryCache"
+           maxEntriesLocalHeap="20000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="false">
+	</cache>
+
+	<cache name="authorizationCache" eternal="false" maxEntriesLocalHeap="20000"
+		   timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false"
+		   statistics="true">
+	</cache>
+
+	<cache name="authenticationCache" eternal="false" maxEntriesLocalHeap="20000"
+		   timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false"
+		   statistics="true">
+	</cache>
+
+	<cache name="shiro-activeSessionCache" eternal="false" maxEntriesLocalHeap="20000"
+		   timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false"
+		   statistics="true">
+	</cache>
+</ehcache>

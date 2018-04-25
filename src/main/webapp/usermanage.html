@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 用户管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>用户管理 <small class="m-l-sm">查看和操作用户信息</small></h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="tabs_panels.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="tabs_panels.html#">选项1</a>
+                            </li>
+                            <li><a href="tabs_panels.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                    <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline btn-default">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true" data-align="center"></th>
+                            <th data-field="userId" data-align="center" >ID</th>
+                            <th data-field="userName" data-align="center" >用户名</th>
+                            <th data-field="userSex" data-align="center" >性别</th>
+                            <th data-field="userAge" data-align="center" >年龄</th>
+                            <th data-field="userAddress" data-align="center">位置</th>
+                            <th data-field="userRegisterTime" data-align="center">注册时间</th>
+                            <th data-field="userPhoneNumber" data-align="center" >手机号</th>
+                            <th data-field="userRole" data-align="center" >角色</th>
+                            <th data-align="center" data-formatter="actionFormatter" data-events="actionEvents">操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!--公共方法-->
+<script src="js/public.js"></script>
+
+
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#exampleTableEvents').bootstrapTable({
+            url: "user/findByClassWithPaginate",  //这个接口需要处理bootstrap table传递的固定参数
+            method: 'get',    //请求方法
+            classes:'table table-hover table-no-bordered',  //设置表格无边框
+            idField:'userId', //指定主键列
+            //search: true,      //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,   //是否全局搜索
+            searchOnEnterKey: true,   //是否按回车键搜索
+            //contentType: "application/x-www-form-urlencoded",  如果是post请求则需要显式的申明
+            queryParamsType:'', //默认值为 'limit' ,在默认情况下 传给服务端的参数为：offset,limit,sort   设置为 ''  在这种情况下传给服务器的参数为：pageSize,pageNumber
+            //queryParams: queryParams,//前端调用服务时，会默认传递上边提到的参数，如果需要添加自定义参数，可以自定义一个函数返回请求参数
+            pagination: true, //是否显示分页（*）
+            sidePagination: "server",   //分页方式：client客户端分页，server服务端分页（*）
+            sortable: false,      //是否启用排序
+            sortOrder: "asc",     //排序方式
+            pageNumber:1,      //初始化加载第一页，默认第一页
+            pageSize: 10,      //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],  //可供选择的每页的行数（*）
+            showRefresh: true,   //是否显示刷新按钮
+            showToggle: true,
+            showColumns: true,  //是否显示所有的列
+            minimumCountColumns: 2,    //最少允许的列数
+            //clickToSelect: true,    //是否启用点击选中行
+            iconSize: 'outline',
+            toolbar: '#exampleTableEventsToolbar', //工具按钮用哪个容器
+            striped: true,      //是否显示行间隔色
+            cache: false,      //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            icons: {
+                refresh: 'glyphicon-repeat',
+                toggle: 'glyphicon-list-alt',
+                columns: 'glyphicon-list'
+            }
+        });
+        //表格  - 操作 - 事件
+        window.actionEvents = {
+            'click .detail': function(e, value, row, index) {
+                //修改操作
+                alert("详情");
+            },
+            'click .mod': function(e, value, row, index) {
+                //修改操作
+                alert("操作");
+            },
+            'click .delete' : function(e, value, row, index) {
+                //删除操作
+                alert("删除");
+            }
+        }
+    });
+
+</script>
+
+
+</body>
+
+</html>
